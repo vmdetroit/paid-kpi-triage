@@ -7,26 +7,32 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f9f9f7;color:#1a1a1a;padding:2rem 1.5rem;min-height:100vh}
-.header{margin-bottom:1.5rem}
+.header{margin-bottom:1.25rem}
 .header h1{font-size:20px;font-weight:600;margin-bottom:4px}
 .header p{font-size:13px;color:#666;margin-bottom:1rem}
-.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem}
+.formulas{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:1.25rem;padding:12px 16px;background:#fff;border:1px solid #e5e5e0;border-radius:10px;align-items:center}
+.formula-label{font-size:11px;font-weight:600;color:#999;text-transform:uppercase;letter-spacing:.05em;margin-right:4px}
+.formula{font-size:12px;font-family:'SF Mono',Consolas,monospace;color:#1a1a1a;background:#f5f5f2;padding:4px 10px;border-radius:6px;white-space:nowrap}
+.filters-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1rem;align-items:flex-start}
+.filter-group{display:flex;gap:6px;flex-wrap:wrap}
 .filter-btn{font-size:12px;padding:5px 13px;border-radius:20px;border:1px solid #ddd;background:#fff;color:#555;cursor:pointer;transition:all .15s;font-family:inherit}
 .filter-btn.active{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
+.divider{width:1px;background:#e5e5e0;align-self:stretch;margin:0 2px}
 .tbl-wrap{overflow-x:auto;border:1px solid #e5e5e0;border-radius:12px;background:#fff}
 table{width:100%;border-collapse:collapse;font-size:13px}
-col.c1{width:28%}col.c2{width:13%}col.c3{width:11%}col.c4{width:14%}col.c5{width:34%}
+col.c1{width:27%}col.c2{width:13%}col.c3{width:11%}col.c4{width:16%}col.c5{width:33%}
 thead tr{background:#f5f5f2}
 th{padding:10px 14px;text-align:left;font-weight:600;font-size:11px;color:#888;border-bottom:1px solid #e5e5e0;letter-spacing:.04em;text-transform:uppercase}
-td{padding:10px 14px;border-bottom:1px solid #f0f0ec;vertical-align:top;color:#1a1a1a;line-height:1.5}
+td{padding:10px 14px;border-bottom:1px solid #f0f0ec;vertical-align:top;line-height:1.5}
 tr:last-child td{border-bottom:none}
 tr.hidden{display:none}
 .badge{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;font-weight:500;white-space:nowrap}
+.b-auction{background:#E6F1FB;color:#0C447C}
 .b-delivery{background:#E1F5EE;color:#0F6E56}
 .b-creative{background:#EEEDFE;color:#3C3489}
+.b-traffic{background:#FBEAF0;color:#72243E}
 .b-conversion{background:#FAECE7;color:#712B13}
-.b-budget{background:#FAEEDA;color:#633806}
-.b-auction{background:#E6F1FB;color:#0C447C}
+.b-economics{background:#FAEEDA;color:#633806}
 .plat{display:flex;flex-wrap:wrap;gap:4px}
 .p-meta{background:#f0f4ff;color:#2d4db8;border-radius:6px;padding:2px 6px;font-size:11px;font-weight:500}
 .p-google{background:#fff4e6;color:#b85a00;border-radius:6px;padding:2px 6px;font-size:11px;font-weight:500}
@@ -35,25 +41,33 @@ tr.hidden{display:none}
 .kpi-dn::before{content:"↓ ";color:#0F6E56}
 .kpi-flat::before{content:"→ ";color:#999}
 .action{color:#444;font-size:12px}
-.diag{font-size:12px;font-weight:500}
-.count{font-size:12px;color:#888;margin-left:auto}
-.filters-row{display:flex;align-items:center;gap:8px}
+.diag{font-size:12px;font-weight:500;color:#1a1a1a}
+.section-row td{background:#f9f9f7;font-size:11px;font-weight:600;color:#999;text-transform:uppercase;letter-spacing:.06em;padding:8px 14px;border-bottom:1px solid #e5e5e0}
+.new-badge{display:inline-block;font-size:10px;padding:1px 5px;border-radius:4px;background:#E1F5EE;color:#0F6E56;font-weight:600;vertical-align:middle;margin-left:5px}
 </style>
 </head>
 <body>
 <div class="header">
   <h1>Paid Media KPI Triage Chart</h1>
   <p>Signal-based diagnosis and action guide for Meta &amp; Google campaigns.</p>
+  <div class="formulas">
+    <span class="formula-label">Key formulas</span>
+    <span class="formula">CPC = CPM ÷ CTR</span>
+    <span class="formula">CPA = CPC ÷ CVR</span>
+    <span class="formula">ROAS = AOV ÷ CPA</span>
+  </div>
   <div class="filters-row">
-    <div class="filters">
+    <div class="filter-group">
       <button class="filter-btn active" data-cat="all">All</button>
+      <button class="filter-btn" data-cat="auction">Auction</button>
       <button class="filter-btn" data-cat="delivery">Delivery</button>
       <button class="filter-btn" data-cat="creative">Creative</button>
+      <button class="filter-btn" data-cat="traffic">Traffic quality</button>
       <button class="filter-btn" data-cat="conversion">Conversion</button>
-      <button class="filter-btn" data-cat="budget">Budget</button>
-      <button class="filter-btn" data-cat="auction">Auction</button>
+      <button class="filter-btn" data-cat="economics">Economics</button>
     </div>
-    <div class="filters">
+    <div class="divider"></div>
+    <div class="filter-group">
       <button class="filter-btn active" data-plat="all">All platforms</button>
       <button class="filter-btn" data-plat="meta">Meta</button>
       <button class="filter-btn" data-plat="google">Google</button>
@@ -67,19 +81,53 @@ tr.hidden{display:none}
 <th>Signal (KPI pattern)</th><th>Category</th><th>Platform</th><th>Diagnosis</th><th>Recommended action</th>
 </tr></thead>
 <tbody id="tbl">
-<tr data-cat="delivery" data-plat="both">
+
+<!-- AUCTION -->
+<tr class="section-row" data-section="auction"><td colspan="5">Auction</td></tr>
+<tr data-cat="auction" data-plat="both">
 <td><span class="kpi-up">CPM</span> + <span class="kpi-flat">reach stable or decreasing</span></td>
+<td><span class="badge b-auction">Auction</span></td>
+<td><div class="plat"><span class="p-both">Both</span></div></td>
+<td class="diag">Auction pressure or audience saturation</td>
+<td class="action">Expand audience, add new lookalikes, test new interest sets, or refresh creative to improve quality score</td>
+</tr>
+<tr data-cat="auction" data-plat="both">
+<td><span class="kpi-up">CPC</span> + <span class="kpi-flat">CTR stable</span></td>
+<td><span class="badge b-auction">Auction</span></td>
+<td><div class="plat"><span class="p-both">Both</span></div></td>
+<td class="diag">Auction competition increasing</td>
+<td class="action">Isolate via CPC = CPM ÷ CTR — if CPM is rising but CTR holds, the cost increase is purely auction-driven; improve ad quality or broaden targeting to find cheaper inventory</td>
+</tr>
+<tr data-cat="auction" data-plat="google">
+<td><span class="kpi-dn">Impression share</span> + <span class="kpi-flat">budget stable</span></td>
+<td><span class="badge b-auction">Auction</span></td>
+<td><div class="plat"><span class="p-google">Google</span></div></td>
+<td class="diag">Distinguish lost IS (rank) vs. lost IS (budget)</td>
+<td class="action">If rank: improve QS and bids. If budget: increase spend or narrow scope to defend key terms</td>
+</tr>
+<tr data-cat="auction" data-plat="google">
+<td><span class="kpi-up">Search Lost IS (rank)</span></td>
+<td><span class="badge b-auction">Auction</span></td>
+<td><div class="plat"><span class="p-google">Google</span></div></td>
+<td class="diag">Ad rank too low</td>
+<td class="action">Raise bids or improve QS (relevance, expected CTR, LP experience)</td>
+</tr>
+<tr data-cat="auction" data-plat="google">
+<td><span class="kpi-dn">Search IS (budget)</span> + <span class="kpi-flat">CPC stable</span></td>
+<td><span class="badge b-auction">Auction</span></td>
+<td><div class="plat"><span class="p-google">Both</span></div></td>
+<td class="diag">Budget-limited impression share</td>
+<td class="action">Increase budget, tighten match types, or reduce geographic scope</td>
+</tr>
+
+<!-- DELIVERY -->
+<tr class="section-row" data-section="delivery"><td colspan="5">Delivery</td></tr>
+<tr data-cat="delivery" data-plat="both">
+<td><span class="kpi-up">Reach</span> + <span class="kpi-dn">CPM</span> + <span class="kpi-up">CTR</span></td>
 <td><span class="badge b-delivery">Delivery</span></td>
 <td><div class="plat"><span class="p-both">Both</span></div></td>
-<td class="diag">Market saturation</td>
-<td class="action">Expand audience, add new lookalikes, test new interest sets</td>
-</tr>
-<tr data-cat="creative" data-plat="both">
-<td><span class="kpi-up">CPM</span> + <span class="kpi-dn">CTR</span></td>
-<td><span class="badge b-creative">Creative</span></td>
-<td><div class="plat"><span class="p-both">Both</span></div></td>
-<td class="diag">Ad fatigue</td>
-<td class="action">Rotate in new creative; pause top-frequency ads</td>
+<td class="diag">Healthy expansion — scale signal</td>
+<td class="action">Increase budget; algorithm is finding quality inventory efficiently</td>
 </tr>
 <tr data-cat="delivery" data-plat="meta">
 <td><span class="kpi-up">Frequency</span> + <span class="kpi-dn">CTR</span></td>
@@ -88,138 +136,64 @@ tr.hidden{display:none}
 <td class="diag">Audience overexposed</td>
 <td class="action">Broaden targeting, add exclusions, or increase creative variety</td>
 </tr>
+<tr data-cat="delivery" data-plat="meta">
+<td><span class="kpi-up">Frequency</span> + <span class="kpi-dn">CPM</span></td>
+<td><span class="badge b-delivery">Delivery</span></td>
+<td><div class="plat"><span class="p-meta">Meta</span></div></td>
+<td class="diag">Algorithm running out of new users</td>
+<td class="action">Expand audience pool; add new interest sets or lookalikes; consider broad targeting</td>
+</tr>
+<tr data-cat="delivery" data-plat="both">
+<td><span class="kpi-dn">Conversions</span> + <span class="kpi-flat">CTR stable</span> + <span class="kpi-flat">CVR stable</span></td>
+<td><span class="badge b-delivery">Delivery</span></td>
+<td><div class="plat"><span class="p-both">Both</span></div></td>
+<td class="diag">Delivery constraint</td>
+<td class="action">Check budget, learning phase status, bid strategy changes, and audience size — efficiency is fine but volume is being throttled</td>
+</tr>
+<tr data-cat="delivery" data-plat="both">
+<td><span class="kpi-up">Spend pacing fast</span> + <span class="kpi-up">CPA high</span></td>
+<td><span class="badge b-delivery">Delivery</span></td>
+<td><div class="plat"><span class="p-both">Both</span></div></td>
+<td class="diag">Budget scaling faster than algorithm optimization</td>
+<td class="action">Slow budget increases to 15–20% increments; check if still in learning phase; review optimization event</td>
+</tr>
+
+<!-- CREATIVE -->
+<tr class="section-row" data-section="creative"><td colspan="5">Creative</td></tr>
+<tr data-cat="creative" data-plat="both">
+<td><span class="kpi-up">CPM</span> + <span class="kpi-dn">CTR</span></td>
+<td><span class="badge b-creative">Creative</span></td>
+<td><div class="plat"><span class="p-both">Both</span></div></td>
+<td class="diag">Creative relevance decline or audience mismatch</td>
+<td class="action">Rotate in new creative; review audience-to-message fit before assuming fatigue alone</td>
+</tr>
+<tr data-cat="creative" data-plat="meta">
+<td><span class="kpi-up">Frequency</span> + <span class="kpi-up">CPM</span> + <span class="kpi-dn">CTR</span></td>
+<td><span class="badge b-creative">Creative</span></td>
+<td><div class="plat"><span class="p-meta">Meta</span></div></td>
+<td class="diag">Audience exhaustion + auction pressure</td>
+<td class="action">Immediately refresh creative; pause highest-frequency ads; expand audience — both levers need addressing simultaneously</td>
+</tr>
 <tr data-cat="creative" data-plat="both">
 <td><span class="kpi-dn">CTR</span> + <span class="kpi-flat">CPM stable</span></td>
 <td><span class="badge b-creative">Creative</span></td>
 <td><div class="plat"><span class="p-both">Both</span></div></td>
-<td class="diag">Creative fatigue</td>
-<td class="action">Test new hooks, copy angles, and visual formats</td>
+<td class="diag">Creative fatigue or weaker audience relevance</td>
+<td class="action">Test new hooks, copy angles, and visual formats; audit audience overlap</td>
 </tr>
 <tr data-cat="creative" data-plat="both">
-<td><span class="kpi-up">CTR</span> + <span class="kpi-dn">CVR</span></td>
+<td><span class="kpi-up">CPC</span> + <span class="kpi-dn">CTR</span> + <span class="kpi-flat">CPM stable</span></td>
 <td><span class="badge b-creative">Creative</span></td>
 <td><div class="plat"><span class="p-both">Both</span></div></td>
-<td class="diag">Creative–LP mismatch</td>
-<td class="action">Align LP headline/offer to ad copy; check page speed</td>
-</tr>
-<tr data-cat="creative" data-plat="both">
-<td><span class="kpi-dn">CTR</span> + <span class="kpi-up">CVR</span></td>
-<td><span class="badge b-creative">Creative</span></td>
-<td><div class="plat"><span class="p-both">Both</span></div></td>
-<td class="diag">Ad not pre-qualifying traffic</td>
-<td class="action">Add more specificity to ad copy/creative to filter intent</td>
-</tr>
-<tr data-cat="conversion" data-plat="both">
-<td><span class="kpi-dn">CVR</span> + <span class="kpi-flat">CTR stable</span></td>
-<td><span class="badge b-conversion">Conversion</span></td>
-<td><div class="plat"><span class="p-both">Both</span></div></td>
-<td class="diag">Landing page or offer problem</td>
-<td class="action">A/B test LP, check load speed, audit offer clarity</td>
-</tr>
-<tr data-cat="conversion" data-plat="both">
-<td><span class="kpi-up">CPA</span> + <span class="kpi-flat">CVR stable</span></td>
-<td><span class="badge b-conversion">Conversion</span></td>
-<td><div class="plat"><span class="p-both">Both</span></div></td>
-<td class="diag">Traffic cost increasing</td>
-<td class="action">Improve relevance score / QS; shift to lower-CPC segments</td>
-</tr>
-<tr data-cat="conversion" data-plat="both">
-<td><span class="kpi-up">CPA</span> + <span class="kpi-dn">CVR</span></td>
-<td><span class="badge b-conversion">Conversion</span></td>
-<td><div class="plat"><span class="p-both">Both</span></div></td>
-<td class="diag">Full funnel breakdown</td>
-<td class="action">Audit creative → LP → offer chain end-to-end</td>
-</tr>
-<tr data-cat="conversion" data-plat="both">
-<td><span class="kpi-dn">ROAS</span> + <span class="kpi-flat">CVR stable</span></td>
-<td><span class="badge b-conversion">Conversion</span></td>
-<td><div class="plat"><span class="p-both">Both</span></div></td>
-<td class="diag">Average order value dropping</td>
-<td class="action">Check product mix, promote higher-ticket SKUs, add upsells</td>
-</tr>
-<tr data-cat="conversion" data-plat="both">
-<td><span class="kpi-dn">ROAS</span> + <span class="kpi-flat">conversions stable</span></td>
-<td><span class="badge b-conversion">Conversion</span></td>
-<td><div class="plat"><span class="p-both">Both</span></div></td>
-<td class="diag">Revenue per conversion declining</td>
-<td class="action">Investigate AOV erosion; review promo/discount impact</td>
-</tr>
-<tr data-cat="budget" data-plat="both">
-<td><span class="kpi-flat">Under-delivery</span> + <span class="kpi-up">CPM high</span></td>
-<td><span class="badge b-budget">Budget</span></td>
-<td><div class="plat"><span class="p-both">Both</span></div></td>
-<td class="diag">Budget too low for audience</td>
-<td class="action">Increase daily budget or narrow audience to improve win rate</td>
-</tr>
-<tr data-cat="budget" data-plat="both">
-<td><span class="kpi-up">Spend pacing fast</span> + <span class="kpi-up">CPA high</span></td>
-<td><span class="badge b-budget">Budget</span></td>
-<td><div class="plat"><span class="p-both">Both</span></div></td>
-<td class="diag">Audience too broad</td>
-<td class="action">Tighten targeting, add negative audiences, raise bid floors</td>
-</tr>
-<tr data-cat="budget" data-plat="both">
-<td><span class="kpi-flat">ROAS stable</span> + <span class="kpi-dn">revenue decreasing</span></td>
-<td><span class="badge b-budget">Budget</span></td>
-<td><div class="plat"><span class="p-both">Both</span></div></td>
-<td class="diag">Efficient but undersized</td>
-<td class="action">Scale budget; efficiency is there, just not enough spend</td>
-</tr>
-<tr data-cat="auction" data-plat="google">
-<td><span class="kpi-up">CPC</span> + <span class="kpi-flat">CTR stable</span></td>
-<td><span class="badge b-auction">Auction</span></td>
-<td><div class="plat"><span class="p-google">Google</span></div></td>
-<td class="diag">Increased competition or lower QS</td>
-<td class="action">Improve ad relevance, tighten ad groups, boost landing page QS</td>
-</tr>
-<tr data-cat="auction" data-plat="google">
-<td><span class="kpi-dn">Impression share</span> + <span class="kpi-flat">budget stable</span></td>
-<td><span class="badge b-auction">Auction</span></td>
-<td><div class="plat"><span class="p-google">Google</span></div></td>
-<td class="diag">Competitor aggression or QS drop</td>
-<td class="action">Raise bids, improve QS, or check for new entrants in auction</td>
-</tr>
-<tr data-cat="auction" data-plat="google">
-<td><span class="kpi-dn">Search IS (budget)</span> + <span class="kpi-up">CPC stable</span></td>
-<td><span class="badge b-auction">Auction</span></td>
-<td><div class="plat"><span class="p-google">Google</span></div></td>
-<td class="diag">Budget-limited impression share</td>
-<td class="action">Increase budget, tighten match types, or reduce geographic scope</td>
-</tr>
-<tr data-cat="auction" data-plat="both">
-<td><span class="kpi-up">CPM</span> + <span class="kpi-up">CTR</span> + <span class="kpi-dn">CVR</span></td>
-<td><span class="badge b-auction">Auction</span></td>
-<td><div class="plat"><span class="p-both">Both</span></div></td>
-<td class="diag">Winning clicks, wrong audience</td>
-<td class="action">Review who's clicking; add audience signals or exclusions</td>
-</tr>
-<tr data-cat="delivery" data-plat="both">
-<td><span class="kpi-up">Reach</span> + <span class="kpi-dn">CPM</span> + <span class="kpi-up">CTR</span></td>
-<td><span class="badge b-delivery">Delivery</span></td>
-<td><div class="plat"><span class="p-both">Both</span></div></td>
-<td class="diag">Healthy expansion — scale signal</td>
-<td class="action">Increase budget; algorithm is finding quality inventory efficiently</td>
+<td class="diag">Creative performance deterioration — not an auction problem</td>
+<td class="action">CPM stable confirms auction is fine; the entire CPC increase is CTR-driven — focus entirely on creative refresh, not bids</td>
 </tr>
 <tr data-cat="creative" data-plat="meta">
 <td><span class="kpi-dn">Video hook rate</span> + <span class="kpi-flat">CTR stable</span></td>
 <td><span class="badge b-creative">Creative</span></td>
 <td><div class="plat"><span class="p-meta">Meta</span></div></td>
-<td class="diag">Opening frame not stopping scroll</td>
-<td class="action">Retest first 2–3 seconds; lead with stronger visual or pattern interrupt</td>
-</tr>
-<tr data-cat="conversion" data-plat="both">
-<td><span class="kpi-up">Add-to-cart rate</span> + <span class="kpi-dn">purchase CVR</span></td>
-<td><span class="badge b-conversion">Conversion</span></td>
-<td><div class="plat"><span class="p-both">Both</span></div></td>
-<td class="diag">Checkout friction</td>
-<td class="action">Audit checkout UX, shipping costs, trust signals, cart abandonment flow</td>
-</tr>
-<tr data-cat="auction" data-plat="google">
-<td><span class="kpi-up">Avg. CPC</span> + <span class="kpi-dn">conversion rate</span> + <span class="kpi-flat">impressions stable</span></td>
-<td><span class="badge b-auction">Auction</span></td>
-<td><div class="plat"><span class="p-google">Google</span></div></td>
-<td class="diag">Match type drift / irrelevant queries</td>
-<td class="action">Review search terms report; add negatives, tighten match types</td>
+<td class="diag">Weak hook but strong mid-frame value</td>
+<td class="action">Retest opening 2–3 seconds; the click is coming from people who stayed — move CTA earlier</td>
 </tr>
 <tr data-cat="creative" data-plat="meta">
 <td><span class="kpi-dn">ThruPlay rate</span> + <span class="kpi-flat">hook rate stable</span></td>
@@ -228,34 +202,133 @@ tr.hidden{display:none}
 <td class="diag">Mid-video drop-off</td>
 <td class="action">Shorten video; move CTA earlier; tighten middle narrative</td>
 </tr>
+
+<!-- TRAFFIC QUALITY -->
+<tr class="section-row" data-section="traffic"><td colspan="5">Traffic quality</td></tr>
+<tr data-cat="traffic" data-plat="both">
+<td><span class="kpi-dn">CTR</span> + <span class="kpi-up">CVR</span></td>
+<td><span class="badge b-traffic">Traffic quality</span></td>
+<td><div class="plat"><span class="p-both">Both</span></div></td>
+<td class="diag">Fewer but higher-intent users clicking</td>
+<td class="action">Scale or duplicate this creative; test broader reach — the ad is qualifying traffic effectively</td>
+</tr>
+<tr data-cat="traffic" data-plat="both">
+<td><span class="kpi-up">CPM</span> + <span class="kpi-up">CTR</span> + <span class="kpi-dn">CVR</span></td>
+<td><span class="badge b-traffic">Traffic quality</span></td>
+<td><div class="plat"><span class="p-both">Both</span></div></td>
+<td class="diag">Creative over-promising or traffic quality mismatch</td>
+<td class="action">Audit ad-to-LP message match; add audience exclusions for low-intent segments</td>
+</tr>
+<tr data-cat="traffic" data-plat="both">
+<td><span class="kpi-up">CTR</span> + <span class="kpi-dn">CVR</span></td>
+<td><span class="badge b-traffic">Traffic quality</span></td>
+<td><div class="plat"><span class="p-both">Both</span></div></td>
+<td class="diag">Creative–LP mismatch</td>
+<td class="action">Align LP headline/offer to ad copy; check page speed; verify mobile experience</td>
+</tr>
+
+<!-- CONVERSION -->
+<tr class="section-row" data-section="conversion"><td colspan="5">Conversion</td></tr>
+<tr data-cat="conversion" data-plat="both">
+<td><span class="kpi-dn">CVR</span> + <span class="kpi-flat">CTR stable</span></td>
+<td><span class="badge b-conversion">Conversion</span></td>
+<td><div class="plat"><span class="p-both">Both</span></div></td>
+<td class="diag">Landing page or offer problem</td>
+<td class="action">A/B test LP, check load speed, audit offer clarity and CTA prominence</td>
+</tr>
+<tr data-cat="conversion" data-plat="both">
+<td><span class="kpi-up">Add-to-cart rate</span> + <span class="kpi-dn">purchase CVR</span></td>
+<td><span class="badge b-conversion">Conversion</span></td>
+<td><div class="plat"><span class="p-both">Both</span></div></td>
+<td class="diag">Checkout friction</td>
+<td class="action">Audit checkout UX, shipping costs, trust signals, and cart abandonment flow</td>
+</tr>
+<tr data-cat="conversion" data-plat="google">
+<td><span class="kpi-up">Avg. CPC</span> + <span class="kpi-dn">CVR</span> + <span class="kpi-flat">impressions stable</span></td>
+<td><span class="badge b-conversion">Conversion</span></td>
+<td><div class="plat"><span class="p-google">Google</span></div></td>
+<td class="diag">Match type drift or poor LP relevance</td>
+<td class="action">Review search terms report; add negatives, tighten match types, and audit LP relevance to query intent</td>
+</tr>
+
+<!-- ECONOMICS -->
+<tr class="section-row" data-section="economics"><td colspan="5">Economics</td></tr>
+<tr data-cat="economics" data-plat="both">
+<td><span class="kpi-up">CPA</span> + <span class="kpi-dn">CVR</span></td>
+<td><span class="badge b-economics">Economics</span></td>
+<td><div class="plat"><span class="p-both">Both</span></div></td>
+<td class="diag">Conversion funnel degradation</td>
+<td class="action">Audit LP, offer, and checkout in sequence — don't assume the problem is in one place</td>
+</tr>
+<tr data-cat="economics" data-plat="both">
+<td><span class="kpi-up">CPA</span> + <span class="kpi-flat">CVR stable</span></td>
+<td><span class="badge b-economics">Economics</span></td>
+<td><div class="plat"><span class="p-both">Both</span></div></td>
+<td class="diag">Traffic cost increasing</td>
+<td class="action">Improve relevance score / QS; shift to lower-CPC segments — the funnel itself is healthy</td>
+</tr>
+<tr data-cat="economics" data-plat="both">
+<td><span class="kpi-dn">ROAS</span> + <span class="kpi-flat">CVR stable</span></td>
+<td><span class="badge b-economics">Economics</span></td>
+<td><div class="plat"><span class="p-both">Both</span></div></td>
+<td class="diag">Average order value dropping</td>
+<td class="action">Check product mix, promote higher-ticket SKUs, add upsells and bundles</td>
+</tr>
+<tr data-cat="economics" data-plat="both">
+<td><span class="kpi-dn">ROAS</span> + <span class="kpi-flat">conversions stable</span></td>
+<td><span class="badge b-economics">Economics</span></td>
+<td><div class="plat"><span class="p-both">Both</span></div></td>
+<td class="diag">Revenue per conversion declining</td>
+<td class="action">Investigate AOV erosion; review promo/discount impact on margin</td>
+</tr>
+<tr data-cat="economics" data-plat="both">
+<td><span class="kpi-flat">ROAS stable</span> + <span class="kpi-dn">revenue decreasing</span></td>
+<td><span class="badge b-economics">Economics</span></td>
+<td><div class="plat"><span class="p-both">Both</span></div></td>
+<td class="diag">Efficient but undersized</td>
+<td class="action">Scale budget; efficiency is proven, volume is the only constraint</td>
+</tr>
+<tr data-cat="economics" data-plat="both">
+<td><span class="kpi-flat">Under-delivery</span> + <span class="kpi-up">CPM high</span></td>
+<td><span class="badge b-economics">Economics</span></td>
+<td><div class="plat"><span class="p-both">Both</span></div></td>
+<td class="diag">Auction competitiveness too low</td>
+<td class="action">Check budget, bid, and audience size together — any of the three can cause this pattern</td>
+</tr>
+
 </tbody>
 </table>
 </div>
-<p style="font-size:11px;color:#aaa;margin-top:1rem;text-align:right">Verde Media · Paid Media KPI Triage · <span id="yr"></span></p>
+<p style="font-size:11px;color:#aaa;margin-top:1rem;text-align:right">Verde Media · Paid Media KPI Triage v3 · <span id="yr"></span></p>
 <script>
 document.getElementById('yr').textContent=new Date().getFullYear();
-let activeCat='all', activePlat='all';
-const rows=document.querySelectorAll('#tbl tr');
-
+let activeCat='all',activePlat='all';
+const rows=document.querySelectorAll('#tbl tr:not(.section-row)');
+const sectionRows=document.querySelectorAll('.section-row');
+const sectionMap={
+  'Auction':'auction','Delivery':'delivery','Creative':'creative',
+  'Traffic quality':'traffic','Conversion':'conversion','Economics':'economics'
+};
 function applyFilters(){
   rows.forEach(r=>{
-    const catMatch = activeCat==='all' || r.dataset.cat===activeCat;
-    const platMatch = activePlat==='all' || r.dataset.plat===activePlat || r.dataset.plat==='both';
-    r.classList.toggle('hidden', !(catMatch && platMatch));
+    const catMatch=activeCat==='all'||r.dataset.cat===activeCat;
+    const platMatch=activePlat==='all'||r.dataset.plat===activePlat||r.dataset.plat==='both';
+    r.classList.toggle('hidden',!(catMatch&&platMatch));
+  });
+  sectionRows.forEach(s=>{
+    const label=s.querySelector('td').textContent.trim();
+    const cat=sectionMap[label];
+    const catMatch=activeCat==='all'||activeCat===cat;
+    s.classList.toggle('hidden',!catMatch);
   });
 }
-
 document.querySelectorAll('[data-cat]').forEach(b=>b.addEventListener('click',()=>{
   document.querySelectorAll('[data-cat]').forEach(x=>x.classList.remove('active'));
-  b.classList.add('active');
-  activeCat=b.dataset.cat;
-  applyFilters();
+  b.classList.add('active');activeCat=b.dataset.cat;applyFilters();
 }));
 document.querySelectorAll('[data-plat]').forEach(b=>b.addEventListener('click',()=>{
   document.querySelectorAll('[data-plat]').forEach(x=>x.classList.remove('active'));
-  b.classList.add('active');
-  activePlat=b.dataset.plat;
-  applyFilters();
+  b.classList.add('active');activePlat=b.dataset.plat;applyFilters();
 }));
 </script>
 </body>
